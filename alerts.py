@@ -6,10 +6,14 @@ from dotenv import load_dotenv
 load_dotenv()
 
 FEED_URL = os.getenv("GTFS_FEED_URL")
-WATCHED_ROUTES = ["L991", "L992", "L993", "L560"]
+#! deprecated WATCHED_ROUTES = []#["L991", "L992", "L993", "L560"]
 current_alerts = []
 
-def get_current():
+def get_current(routes = []):
+    """
+    queries GTFS feed and returns list of current alerts for specified routes
+    if routes = [] (default), returns alerts for all routes
+    """
     feed = gtfs_realtime_pb2.FeedMessage()
     response = requests.get(FEED_URL)
     feed.ParseFromString(response.content)
@@ -19,7 +23,7 @@ def get_current():
             continue
 
         for element in entity.alert.informed_entity:
-            if element.route_id in WATCHED_ROUTES:
+            if element.route_id in routes or routes == []:
                 current_alerts.append(entity)
     return current_alerts
 

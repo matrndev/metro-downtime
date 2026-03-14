@@ -3,17 +3,15 @@ from dotenv import load_dotenv
 load_dotenv()
 
 import alerts
+import downtime
 import database
 
 current_alerts = alerts.get_current()
 
+print("Current alerts:")
 for entity in current_alerts:
     database.upsert_alert(entity)
+    print(entity)
 
-
-#print(current_alerts[0].alert.active_period[0].end)
-#print(alerts.calculate_active(current_alerts[0].alert.active_period[0].start, current_alerts[0].alert.active_period[0].end))
-
-
-#print(database.get_active())
-
+route_id = input("Get route downtime for route: ")
+print(downtime.downtime_for_route(route_id))

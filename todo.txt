@@ -1,0 +1,3 @@
+treat orphaned alerts (no longer on website but still show up as active in db)
+downtime calc may be buggy
+save downtime to db
