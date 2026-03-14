@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 FEED_URL = os.getenv("GTFS_FEED_URL")
-#! deprecated WATCHED_ROUTES = []#["L991", "L992", "L993", "L560"]
+
 current_alerts = []
 
 def get_current(routes = []):

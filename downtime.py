@@ -21,13 +21,13 @@ def merge_intervals(intervals):
             merged.append((s, e))
     return merged
 
-def downtime_for_route(route_id, downtime_window_days = 30):
+def downtime_for_route(route_id, downtime_window_days = 30, important_only = True):
     """
     returns json with calculated downtime for the selected route
     """
     now = datetime.now().timestamp()
 
-    alerts = database.get_alerts_for_route(route_id, downtime_window_days, important_only=True)
+    alerts = database.get_alerts_for_route(route_id, downtime_window_days, important_only=important_only)
 
     window_start = now - downtime_window_days * 86400
 

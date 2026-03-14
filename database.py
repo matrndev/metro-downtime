@@ -38,7 +38,7 @@ def get_alerts_for_route(route_id, last_days = 1, important_only = False):
     
     route_alerts = collection.find({
         "informedEntity": {"$elemMatch": {"routeId": route_id}},
-        "effect": {"$in": IMPORTANT_EFFECTS},
+        **({"effect": {"$in": IMPORTANT_EFFECTS}} if important_only else {}),
         "activePeriod.0.start": {"$lt": current_ts},
         "$or": [
             {"activePeriod.0.end": {"$exists": False}},  # no end field
