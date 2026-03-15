@@ -21,7 +21,7 @@ def merge_intervals(intervals):
             merged.append((s, e))
     return merged
 
-def downtime_for_route(route_id, downtime_window_days = 30, important_only = True, filter_effects = None):
+def downtime_for_route(route_id, downtime_window_days = 30, important_only = False, filter_effects = None):
     """
     returns json with calculated downtime for the selected route
     """
@@ -59,3 +59,55 @@ def downtime_for_route(route_id, downtime_window_days = 30, important_only = Tru
     }
 
     return results
+
+def calculate_chunks(route_id, chunk_size_hours, chunk_count, important_only = False, filter_effects = None):
+    now = datetime.now().timestamp()
+    chunk_size_seconds = chunk_size_hours * 3600
+
+    chunks = []
+    for i in range(chunk_count):
+        chunk_end = now - (i * chunk_size_seconds)
+        chunk_start = chunk_end - chunk_size_seconds
+        chunks.append({
+            "start": chunk_start,
+            "end": chunk_end
+        })
+    
+    i = 0
+    for chunk in chunks:
+        alerts = database.get_alerts_for_route_in_timeframe(route_id, chunk["start"], chunk["end"], important_only=important_only, filter_effects=filter_effects)
+        chunks[i] = {
+            "start": chunk["start"],
+            "end": chunk["end"],
+            "alerts": alerts
+        }
+        i += 1
+    
+    return chunks
+
+
+
+    # now = datetime.now().timestamp()
+    # chunk_size_seconds = chunk_size_hours * 3600
+
+    # chunks = []
+    # for i in range(chunk_count):
+    #     chunk_end = now - (i * chunk_size_seconds)
+    #     chunk_start = chunk_end - chunk_size_seconds
+    #     chunks.append((chunk_start, chunk_end))
+
+    # results = []
+    # for start, end in chunks:
+    #     downtime_info = downtime_for_route(route_id, downtime_window_days=chunk_size_hours/24, important_only=important_only, filter_effects=filter_effects)
+    #     results.append({
+    #         "start": start,
+    #         "end": end,
+    #         "downtime_info": {
+    #             "downtime_pct": downtime_info["downtime_pct"],
+    #             "incident_count": downtime_info["incident_count"]
+    #         }
+    #     })
+
+    # # todo: this does not work how i want it to, it's probably still best to just make a db method where you can specify a time window and get the alerts for that ://////////
+
+    # return results

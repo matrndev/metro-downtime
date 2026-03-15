@@ -1,4 +1,5 @@
 from fastapi import FastAPI, HTTPException
+from fastapi.responses import FileResponse
 import database
 import downtime
 import json
@@ -6,6 +7,10 @@ import json
 app = FastAPI()
 
 POSSIBLE_EFFECTS = ["NO_SERVICE", "REDUCED_SERVICE", "SIGNIFICANT_DELAYS", "DETOUR", "ADDITIONAL_SERVICE", "MODIFIED_SERVICE", "OTHER_EFFECT", "UNKNOWN_EFFECT", "STOP_MOVED", "ACCESSIBILITY_ISSUE", "NO_EFFECT"]
+
+@app.get("/")
+async def root():
+    return FileResponse("test.html")
 
 @app.get("/alerts/all-active")
 async def root():
@@ -45,4 +50,18 @@ async def get_downtime(route_id: str, last_days: int, filter_effects: str = None
 
     data = downtime.downtime_for_route(route_id, downtime_window_days=last_days, important_only=important_only, filter_effects=picked_effects)
     return json.loads(json.dumps(data, default=str)) if data else {"detail": "No relevant results found"}
-    
+
+# todo: we should outsource picked effects checking to a different function since it's used in multiple places
+@app.get("/alerts/route/{route_id}/downtime/chunks")
+async def get_downtime_chunks(route_id: str, chunk_size_hours: int, chunk_count: int, filter_effects: str = None):
+    picked_effects = filter_effects.split(",") if filter_effects else []
+    important_only = False
+    if picked_effects and picked_effects[0] == "_important":
+        important_only = True
+    else:
+        for effect in picked_effects:
+            if effect not in POSSIBLE_EFFECTS:
+                raise HTTPException(status_code=400, detail=f"Invalid effect")
+
+    data = downtime.calculate_chunks(route_id, chunk_size_hours, chunk_count, important_only=important_only, filter_effects=picked_effects)
+    return json.loads(json.dumps(data, default=str)) if data else {"detail": "No relevant results found"}

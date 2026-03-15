@@ -51,6 +51,26 @@ def get_alerts_for_route(route_id, last_days = 1, important_only = False, filter
 
     return list(route_alerts)
 
+def get_alerts_for_route_in_timeframe(route_id, start_ts, end_ts, important_only = False, filter_effects = None):
+    """
+    retrieves alerts for the specified route and timeframe
+    """
+    if important_only:
+        filter_effects = IMPORTANT_EFFECTS
+    
+    route_alerts = collection.find({
+        "informedEntity": {"$elemMatch": {"routeId": route_id}},
+        **({"effect": {"$in": filter_effects}} if filter_effects else {}),
+        "activePeriod.0.start": {"$lt": end_ts},
+        "$or": [
+            {"activePeriod.0.end": {"$exists": False}},  # no end field
+            {"activePeriod.0.end": 0},                   # open-ended
+            {"activePeriod.0.end": {"$gte": start_ts}},  # ended inside/after window
+        ],
+    })
+
+    return list(route_alerts)
+
 def get_active():
     """
     retrieves all active alerts from database
