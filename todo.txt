@@ -1,10 +1,10 @@
 DONE: remove active=true entirely from db (no reason to have it, extra liability)
+DONE: filter by specific effects (not just 'important only')
 
-
-filter by specific effects (not just 'important only')
 track each route delays (trip_updates gtfs)
 - show vehicle headcode
 
+don't send an alert in each chunk, only send whole alert once and send alert ids in chunks
 
 ---
 save downtime to db
