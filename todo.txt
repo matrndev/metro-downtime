@@ -1,2 +1,11 @@
-treat orphaned alerts (no longer on website but still show up as active in db)
+DONE: remove active=true entirely from db (no reason to have it, extra liability)
+
+
+filter by specific effects (not just 'important only')
+track each route delays (trip_updates gtfs)
+- show vehicle headcode
+
+
+---
 save downtime to db
+treat orphaned alerts (no longer on website but still show up as active in db)

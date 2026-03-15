@@ -5,11 +5,11 @@ import time
 from dotenv import load_dotenv
 load_dotenv()
 
-FEED_URL = os.getenv("GTFS_FEED_URL")
+FEED_URL = os.getenv("GTFS_FEED_URL") + "alerts.pb"
 
 current_alerts = []
 
-def get_current(routes = []):
+def get_current(routes = [], active_only = False):
     """
     queries GTFS feed and returns list of current alerts for specified routes
     if routes = [] (default), returns alerts for all routes
@@ -24,9 +24,12 @@ def get_current(routes = []):
 
         for element in entity.alert.informed_entity:
             if element.route_id in routes or routes == []:
-                current_alerts.append(entity)
+                if active_only:
+                    if calculate_active(entity.alert.active_period[0].start, entity.alert.active_period[0].end):
+                        current_alerts.append(entity)
+                else:
+                    current_alerts.append(entity)
     return current_alerts
-
 
 def calculate_active(start_time, end_time = 0):
     if end_time == 0: # alert is active if no end time
