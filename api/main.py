@@ -3,7 +3,6 @@ from dotenv import load_dotenv
 load_dotenv()
 
 import alerts
-import downtime
 import database
 
 current_alerts = alerts.get_current()
