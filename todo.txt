@@ -9,3 +9,5 @@ don't send an alert in each chunk, only send whole alert once and send alert ids
 ---
 save downtime to db
 treat orphaned alerts (no longer on website but still show up as active in db)
+
+use sql instead lol
