@@ -67,25 +67,32 @@ def calculate_chunks(route_id, chunk_size_hours, chunk_count, important_only = F
     chunks = []
     for i in range(chunk_count):
         chunk_end = now - (i * chunk_size_seconds)
-        chunk_start = chunk_end - chunk_size_seconds
+        chunk_start = now - ((i + 1) * chunk_size_seconds)
         chunks.append({
             "start": chunk_start,
-            "end": chunk_end
+            "end": chunk_end,
+            "alerts": []
         })
     
-    i = 0
-    for chunk in chunks:
-        alerts = database.get_alerts_for_route_in_timeframe(route_id, chunk["start"], chunk["end"], important_only=important_only, filter_effects=filter_effects)
-        chunks[i] = {
-            "start": chunk["start"],
-            "end": chunk["end"],
-            "alerts": alerts
-        }
-        i += 1
+    range_start = chunks[-1]["start"]
+    range_end = chunks[0]["end"]
+
+    alerts = database.get_alerts_for_route_in_timeframe(
+        route_id, range_start, range_end,
+        important_only, filter_effects
+    )
     
+    for alert in alerts:
+        period_start = alert["activePeriod"][0]["start"]
+        period_end   = alert["activePeriod"][0]["end"] or range_end
+
+        for i, chunk in enumerate(chunks):
+            if period_start < chunk["end"] and period_end > chunk["start"]:
+                chunks[i]["alerts"].append(alert)
+
     return chunks
 
-
+print(calculate_chunks("L1333", 1, 5))
 
     # now = datetime.now().timestamp()
     # chunk_size_seconds = chunk_size_hours * 3600
