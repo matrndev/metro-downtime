@@ -30,6 +30,11 @@ export default async function Home() {
           route={routeId}
         />
       ))}
+      <br /><br /><br />
+      <p>Last updated:</p>
+      {activeAlerts.map((alert: any) => (
+        <p key={alert.id} className="font-bold">{new Date(alert.lastUpdated * 1000).toLocaleString("en-GB")} -- <small className="text-xs text-clip font-normal">{alert.descriptionText.translation[0].text} <i className="text-red-700">(for {alert.informedEntity.map((entity: any) => entity.routeId).join(", ")})</i></small></p>
+      ))}
     </div>
   );
 }
