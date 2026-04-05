@@ -38,7 +38,7 @@ const translations: Record<SupportedLanguages, Record<string, string>> = {
         UNKNOWN_EFFECT: "Neznámé opatření",
         STOP_MOVED: "Zastávka přemístěna",
         NO_EFFECT: "Ostatní (neovlivňuje dopravu)",
-        ACCESSIBILITY_ISSUE: "Není bezbariérový přístup",
+        ACCESSIBILITY_ISSUE: "Omezení přístupnosti",
 
         UNKNOWN_CAUSE: "Neznámá příčina",
         OTHER_CAUSE: "Jiná příčina",

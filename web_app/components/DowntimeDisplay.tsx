@@ -13,6 +13,7 @@ export default async function DowntimeDisplay({ route, chunkSizeHours, chunkCoun
     const alerts = json.alerts;
     const chunks = json.chunks.reverse();
 
+    const lastDays = chunkSizeHours * chunkCount / 24;
     return (
         <div className="m-2 rounded-md border border-lime-900 p-4">
             <p className="font-bold text-xl">{route}</p>
@@ -26,7 +27,7 @@ export default async function DowntimeDisplay({ route, chunkSizeHours, chunkCoun
                     />
                 ))}
             </div>
-            <p className="text-xs text-gray-400 font-medium text-right">Last {chunkSizeHours * chunkCount / 24} days</p>
+            <p className="text-xs text-gray-400 font-medium text-right">Last {lastDays} day{lastDays !== 1 ? "s" : ""}</p>
         </div>
     );
 }
