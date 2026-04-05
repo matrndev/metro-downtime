@@ -1,12 +1,18 @@
 DONE: remove active=true entirely from db (no reason to have it, extra liability)
 DONE: filter by specific effects (not just 'important only')
 
+on /, show all lines with active alerts and past alerts on that day
+
+show event details when clicked on a segment
+
+
 track each route delays (trip_updates gtfs)
 - show vehicle headcode
 
 DONE: don't send an alert in each chunk, only send whole alert once and send alert ids in chunks
-
 DONE: show downtime segment colours based on event severity
+
+
 filter by event severity
 ui for filtering by line/event and timeframe
 

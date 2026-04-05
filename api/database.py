@@ -8,8 +8,8 @@ from google.protobuf.json_format import MessageToDict
 load_dotenv()
 
 client = MongoClient(os.getenv("MONGODB_URI"))
-db = client["metro-downtime"]
-collection = db["alerts"]
+db = client[os.getenv("DB_NAME")]
+collection = db[os.getenv("DB_COLLECTION")]
 
 IMPORTANT_EFFECTS = ["NO_SERVICE", "REDUCED_SERVICE"]
 

@@ -55,7 +55,7 @@ def downtime_for_route(route_id, downtime_window_days = 30, important_only = Fal
         "downtime_seconds": total_seconds,
         "downtime_hours": round(total_seconds / 3600, 2),
         "downtime_pct": round((total_seconds / window_seconds) * 100, 2),
-        "incident_count": len(merged)
+        "incident_count": len(intervals)
     }
 
     return results

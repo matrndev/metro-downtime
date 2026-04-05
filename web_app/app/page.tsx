@@ -1,33 +1,35 @@
-import Button from "@/components/Button";
-import TextBox from "@/components/TextBox";
+import DowntimeDisplay from "@/components/DowntimeDisplay";
 
-interface Alert {
-  id: string;
-  descriptionText: {
-    translation: {
-      text: string;
-    }[];
-  };
+async function getActiveAlerts() {
+  const res = await fetch("http://localhost:8000/alerts/all-active");
+  return res.json();
 }
 
+// todo: rewrite
+
 export default async function Home() {
-  const data = await fetch("http://localhost:8000/alerts/all-active");
-  const alerts = await data.json();
-  console.log(alerts);
+  const activeAlerts = await getActiveAlerts();
+
+  // Flatten: one entry per route across all alerts
+  const alertRoutes = activeAlerts.flatMap((alert: any) =>
+    alert.informedEntity.map((entity: { routeId: string }) => ({
+      alertId: alert.id,
+      routeId: entity.routeId,
+    }))
+  );
 
   return (
-    <>
-      <p>welcome!!</p>
-      <ul className="list-disc list-inside pl-6 text-lime-600 mb-6">
-        {
-          alerts.map((alert: Alert) => (
-            <li key={alert.id}>{alert.descriptionText.translation[0].text}</li>
-          ))
-        }
-      </ul>
-      
-      <TextBox placeholder="Enter line number..." />
-      <Button title="Check Downtime" />
-    </>
+    <div className="container max-w-4xl mx-auto justify-center mt-10">
+      <h1 className="text-2xl font-bold">Currently active:</h1>
+      <br />
+      {alertRoutes.map(({ alertId, routeId }) => (
+        <DowntimeDisplay
+          key={`${alertId}-${routeId}`}
+          chunkCount={24}
+          chunkSizeHours={1}
+          route={routeId}
+        />
+      ))}
+    </div>
   );
 }

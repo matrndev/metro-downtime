@@ -32,7 +32,7 @@ export default async function DowntimeDisplay({ route, chunkSizeHours, chunkCoun
             </div>
             <div className="text-right">
                 <div className="relative inline-block group">
-                    <p className="text-xs text-gray-500 font-medium">
+                    <p className="text-xs text-gray-500 font-medium cursor-default">
                         Availability: {Number(100 - downtime.downtime_pct)}% in the last {lastDays} day{lastDays !== 1 ? "s" : ""}
                     </p>
                     {downtime.downtime_pct > 0 && (
@@ -40,13 +40,13 @@ export default async function DowntimeDisplay({ route, chunkSizeHours, chunkCoun
                             className="
                                 absolute right-0 top-full mt-2 w-max pointer-events-none
                                 rounded-sm bg-gray-700 px-3 py-2 text-sm text-white
-                                opacity-0 transition-opacity text-center z-50
+                                opacity-0 transition-opacity text-center z-50 text-right
                                 group-hover:opacity-100 group-focus-within:opacity-100
                             "
                         >
                             This service has been unavailable for ~{Math.round(downtime.downtime_hours)} out of {chunkSizeHours * chunkCount} hours.
                             <br />
-                            {downtime.incident_count} incident{downtime.incident_count !== 1 ? "s" : ""} reported in the last {lastDays} day{lastDays !== 1 ? "s" : ""}.
+                            {downtime.incident_count} incident{downtime.incident_count !== 1 ? "s" : ""} active in the last {lastDays} day{lastDays !== 1 ? "s" : ""}.
                         </div>
 
                     )}
