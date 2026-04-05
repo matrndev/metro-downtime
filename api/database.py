@@ -15,7 +15,7 @@ IMPORTANT_EFFECTS = ["NO_SERVICE", "REDUCED_SERVICE"]
 
 def upsert_alert(entity):
     """
-    inserts or updates an alert in the database
+    inserts a new alert or updates an already existing alert
     """
     new_alert = MessageToDict(entity)
 
