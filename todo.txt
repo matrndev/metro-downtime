@@ -5,6 +5,10 @@ filter by event severity
 ui for filtering by line/event and timeframe
 dashboard-style stats on landing page (global percentage of downtime etc)
 
+STOP_MOVED showing yellow segments (probably not that sever)
+light/dark mode switching
+language switching
+calendar-style historical uptime as in example https://discordstatus.com/uptime
 
 track each route delays (trip_updates gtfs)
 - show vehicle headcode
@@ -16,6 +20,6 @@ DONE: filter by specific effects (not just 'important only')
 
 ---
 save downtime to db
-treat orphaned alerts (no longer on website but still show up as active in db) -- but how?
+treat orphaned alerts (no longer on website but still show up as active in db) -- orphans are those which are still active in db but not included in all-active, this check should run every time in main.py minutes
 
 use sql instead lol
