@@ -38,7 +38,7 @@ async def get_alerts_for_route(route_id: str, last_days: int, filter_effects: st
     return json.loads(json.dumps(data, default=str)) if data else {"detail": "No relevant results found"}
 
 @app.get("/alerts/route/{route_id}/downtime")
-async def get_downtime(route_id: str, last_days: int, filter_effects: str = None):
+async def get_downtime(route_id: str, last_days: float, filter_effects: str = None):
     picked_effects = filter_effects.split(",") if filter_effects else []
     important_only = False
     if picked_effects and picked_effects[0] == "_important":

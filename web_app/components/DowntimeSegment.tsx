@@ -30,7 +30,7 @@ export default function DowntimeSegment({ alerts, tsStart, tsEnd }: { alerts: Ar
       <div className="relative group flex-1">
         <span
           className={
-            "block h-8 text-sm " + chooseSegmentColor(alerts)
+            "rounded block h-8 text-sm " + chooseSegmentColor(alerts)
           }
         />
 
@@ -59,13 +59,13 @@ export default function DowntimeSegment({ alerts, tsStart, tsEnd }: { alerts: Ar
 }
 
 function chooseSegmentColor(alerts: Array<Alert>) {
-  let chosenColor = "bg-green-500";
+  let chosenColor = "bg-green-600";
 
   for (const alert of alerts) {
     const severity = evalSeverity(alert.effect);
 
-    if (severity === 3) return "bg-red-500";
-    if (severity !== 0) return chosenColor = "bg-yellow-500";
+    if (severity === 3) return "bg-red-600";
+    if (severity !== 0) return chosenColor = "bg-yellow-600";
   }
   return chosenColor;
 }
