@@ -11,7 +11,7 @@ client = MongoClient(os.getenv("MONGODB_URI"))
 db = client["metro-downtime"]
 collection = db["alerts"]
 
-IMPORTANT_EFFECTS = ["NO_SERVICE", "REDUCED_SERVICE", "SIGNIFICANT_DELAYS"]
+IMPORTANT_EFFECTS = ["NO_SERVICE", "REDUCED_SERVICE"]
 
 def upsert_alert(entity):
     """

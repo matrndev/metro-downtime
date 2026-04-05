@@ -6,7 +6,7 @@ track each route delays (trip_updates gtfs)
 
 DONE: don't send an alert in each chunk, only send whole alert once and send alert ids in chunks
 
-show downtime segment colours based on event severity
+DONE: show downtime segment colours based on event severity
 filter by event severity
 ui for filtering by line/event and timeframe
 

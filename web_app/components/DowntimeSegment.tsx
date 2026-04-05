@@ -17,6 +17,7 @@ interface Alert {
 }
 
 import gtfsToHumanReadable from "@/utils/gtfsToHumanReadable";
+import evalSeverity from "@/utils/evalSeverity";
 
 export default function DowntimeSegment({ alerts, tsStart, tsEnd }: { alerts: Array<Alert>, tsStart: number, tsEnd: number }) {
   const tsStartDate = new Date(Number(tsStart) * 1000);
@@ -29,8 +30,7 @@ export default function DowntimeSegment({ alerts, tsStart, tsEnd }: { alerts: Ar
       <div className="relative group flex-1">
         <span
           className={
-            "block h-8 text-sm " +
-            (alerts.length === 0 ? "bg-green-500" : "bg-red-500")
+            "block h-8 text-sm " + chooseSegmentColor(alerts)
           }
         />
 
@@ -59,5 +59,14 @@ export default function DowntimeSegment({ alerts, tsStart, tsEnd }: { alerts: Ar
 }
 
 function chooseSegmentColor(alerts: Array<Alert>) {
+  let chosenColor = "bg-green-500";
 
+  for (const alert of alerts) {
+    const severity = evalSeverity(alert.effect);
+
+    if (severity === 3) return "bg-red-500";
+    if (severity !== 0) return chosenColor = "bg-yellow-500";
+  }
+  return chosenColor;
 }
+
