@@ -1,9 +1,9 @@
-DONE: remove active=true entirely from db (no reason to have it, extra liability)
-DONE: filter by specific effects (not just 'important only')
-
-on /, show all lines with active alerts and past alerts on that day
-
-show event details when clicked on a segment
+on /, show all lines with active alerts and **past alerts on that day**
+show (redirect to page?) with event details when clicked on a segment
+make tooltips work on mobile
+filter by event severity
+ui for filtering by line/event and timeframe
+dashboard-style stats on landing page (global percentage of downtime etc)
 
 
 track each route delays (trip_updates gtfs)
@@ -11,12 +11,8 @@ track each route delays (trip_updates gtfs)
 
 DONE: don't send an alert in each chunk, only send whole alert once and send alert ids in chunks
 DONE: show downtime segment colours based on event severity
-
-
-filter by event severity
-ui for filtering by line/event and timeframe
-
-stats (global percentage of downtime etc)
+DONE: remove active=true entirely from db (no reason to have it, extra liability)
+DONE: filter by specific effects (not just 'important only')
 
 ---
 save downtime to db
