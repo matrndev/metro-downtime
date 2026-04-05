@@ -37,7 +37,7 @@ export default function DowntimeSegment({ alerts, tsStart, tsEnd }: { alerts: Ar
         <div
           className="
             absolute left-1/2 top-full mt-2 w-max max-w-xs pointer-events-none
-            -translate-x-1/2 rounded-sm bg-gray-700 px-3 py-2 text-sm text-white
+            -translate-x-1/2 rounded-sm bg-stone-900 px-3 py-2 text-sm text-white border-stone-500 border
             opacity-0 transition-opacity text-center z-50
             group-hover:opacity-100 group-focus-within:opacity-100
           "
