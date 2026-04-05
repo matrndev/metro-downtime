@@ -16,6 +16,6 @@ DONE: filter by specific effects (not just 'important only')
 
 ---
 save downtime to db
-treat orphaned alerts (no longer on website but still show up as active in db)
+treat orphaned alerts (no longer on website but still show up as active in db) -- but how?
 
 use sql instead lol
