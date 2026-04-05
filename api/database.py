@@ -39,7 +39,7 @@ def get_alerts_for_route(route_id, last_days = 1, important_only = False, filter
         filter_effects = IMPORTANT_EFFECTS
     
     route_alerts = collection.find({
-        "informedEntity": {"$elemMatch": {"routeId": route_id}},
+        **({"informedEntity": {"$elemMatch": {"routeId": route_id}}} if not route_id == "*" else {}),
         **({"effect": {"$in": filter_effects}} if filter_effects else {}),
         "activePeriod.0.start": {"$lt": current_ts},
         "$or": [
@@ -59,7 +59,7 @@ def get_alerts_for_route_in_timeframe(route_id, start_ts, end_ts, important_only
         filter_effects = IMPORTANT_EFFECTS
     
     route_alerts = collection.find({
-        "informedEntity": {"$elemMatch": {"routeId": route_id}},
+        **({"informedEntity": {"$elemMatch": {"routeId": route_id}}} if not route_id == "*" else {}),
         **({"effect": {"$in": filter_effects}} if filter_effects else {}),
         "activePeriod.0.start": {"$lt": end_ts},
         "$or": [
