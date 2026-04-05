@@ -71,7 +71,7 @@ def calculate_chunks(route_id, chunk_size_hours, chunk_count, important_only = F
         chunks.append({
             "start": chunk_start,
             "end": chunk_end,
-            "alerts": []
+            "alertIds": []
         })
     
     range_start = chunks[-1]["start"]
@@ -88,11 +88,13 @@ def calculate_chunks(route_id, chunk_size_hours, chunk_count, important_only = F
 
         for i, chunk in enumerate(chunks):
             if period_start < chunk["end"] and period_end > chunk["start"]:
-                chunks[i]["alerts"].append(alert)
+                chunks[i]["alertIds"].append(alert["id"])
+    
+    alerts_by_id = {
+        alert["id"]: alert for alert in alerts
+    }
 
-    return chunks
-
-print(calculate_chunks("L1333", 1, 5))
+    return chunks, alerts_by_id
 
     # now = datetime.now().timestamp()
     # chunk_size_seconds = chunk_size_hours * 3600

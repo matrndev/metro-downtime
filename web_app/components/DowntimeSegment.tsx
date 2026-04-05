@@ -34,6 +34,10 @@ export default function DowntimeSegment({ alerts, tsStart, tsEnd }: { alerts: Ar
           "
         >
           {tsStartFormatted} - {tsEndFormatted}
+          <br />
+            {alerts.map(alert => (
+              <b key={alert.id}>{alert.effect}</b>
+          ))}
         </div>
       </div>
     </>

@@ -64,4 +64,10 @@ async def get_downtime_chunks(route_id: str, chunk_size_hours: int, chunk_count:
                 raise HTTPException(status_code=400, detail=f"Invalid effect")
 
     data = downtime.calculate_chunks(route_id, chunk_size_hours, chunk_count, important_only=important_only, filter_effects=picked_effects)
-    return json.loads(json.dumps(data, default=str)) if data else {"detail": "No relevant results found"}
+    if not data:
+        return {"detail": "No relevant results found"}
+    
+    return {
+        "chunks": json.loads(json.dumps(data[0], default=str)),
+        "alerts": json.loads(json.dumps(data[1], default=str))
+    }
