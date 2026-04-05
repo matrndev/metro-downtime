@@ -8,12 +8,14 @@ interface Alert {
     translation: {
       text: string;
     }[];
-  };
+  };s
 }
 
-export default function DowntimeSegment({ alerts, tsStart, tsEnd }: { alerts: Array<Alert>, tsStart: string, tsEnd: string }) {
-  const tsStartFormatted = new Date(Number(tsStart) * 1000).toLocaleString();
-  const tsEndFormatted = new Date(Number(tsEnd) * 1000).toLocaleString();
+export default function DowntimeSegment({ alerts, tsStart, tsEnd }: { alerts: Array<Alert>, tsStart: number, tsEnd: number }) {
+  const tsStartDate = new Date(Number(tsStart) * 1000);
+  const tsEndDate = new Date(Number(tsEnd) * 1000);
+  const tsStartFormatted = tsStartDate.toLocaleDateString("en-GB", { hour: '2-digit', minute: '2-digit' });
+  const tsEndFormatted = tsEndDate.toLocaleDateString("en-GB", { hour: '2-digit', minute: '2-digit' });
 
   return (
     <>
@@ -28,12 +30,12 @@ export default function DowntimeSegment({ alerts, tsStart, tsEnd }: { alerts: Ar
         <div
           className="
             absolute left-1/2 top-full mt-2 w-max max-w-xs pointer-events-none
-            -translate-x-1/2 rounded-sm bg-gray-700 px-3 py-2 text-xs text-white
+            -translate-x-1/2 rounded-sm bg-gray-700 px-3 py-2 text-sm text-white
             opacity-0 transition-opacity
             group-hover:opacity-100 group-focus-within:opacity-100
           "
         >
-          {tsStartFormatted} - {tsEndFormatted}
+          {tsStartFormatted} -- {tsEndFormatted}
           <br />
             {alerts.map(alert => (
               <b key={alert.id}>{alert.effect}</b>

@@ -4,7 +4,13 @@ DONE: filter by specific effects (not just 'important only')
 track each route delays (trip_updates gtfs)
 - show vehicle headcode
 
-don't send an alert in each chunk, only send whole alert once and send alert ids in chunks
+DONE: don't send an alert in each chunk, only send whole alert once and send alert ids in chunks
+
+show downtime segment colours based on event severity
+filter by event severity
+ui for filtering by line/event and timeframe
+
+stats (global percentage of downtime etc)
 
 ---
 save downtime to db
