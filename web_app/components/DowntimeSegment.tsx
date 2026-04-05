@@ -8,8 +8,15 @@ interface Alert {
     translation: {
       text: string;
     }[];
-  };s
+  };
+  url: {
+    translation: {
+      text: string;
+    }[];
+  };
 }
+
+import gtfsToHumanReadable from "@/utils/gtfsToHumanReadable";
 
 export default function DowntimeSegment({ alerts, tsStart, tsEnd }: { alerts: Array<Alert>, tsStart: number, tsEnd: number }) {
   const tsStartDate = new Date(Number(tsStart) * 1000);
@@ -31,17 +38,26 @@ export default function DowntimeSegment({ alerts, tsStart, tsEnd }: { alerts: Ar
           className="
             absolute left-1/2 top-full mt-2 w-max max-w-xs pointer-events-none
             -translate-x-1/2 rounded-sm bg-gray-700 px-3 py-2 text-sm text-white
-            opacity-0 transition-opacity
+            opacity-0 transition-opacity text-center z-50
             group-hover:opacity-100 group-focus-within:opacity-100
           "
         >
-          {tsStartFormatted} -- {tsEndFormatted}
+          {tsStartFormatted} — {tsEndFormatted}
           <br />
             {alerts.map(alert => (
-              <b key={alert.id}>{alert.effect}</b>
+              <span key={alert.id}>
+                <hr className="my-1" style={{ color: "#808080" }} />
+                <b>{gtfsToHumanReadable(alert.effect, "en")}</b>
+                <br />
+                <p className="text-xs">{gtfsToHumanReadable(alert.cause, "en")}</p>
+              </span>
           ))}
         </div>
       </div>
     </>
   );
+}
+
+function chooseSegmentColor(alerts: Array<Alert>) {
+
 }
