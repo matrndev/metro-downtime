@@ -2,6 +2,10 @@ export interface Alert {
   id: string;
   cause: string;
   effect: string;
+  lastUpdated: number;
+  informedEntity: {
+    routeId: string;
+  }[];
   activePeriod: {
     start: number;
     end: number;
