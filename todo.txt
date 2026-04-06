@@ -1,4 +1,7 @@
 DONE: on /, show all lines with active alerts and **past alerts on that day**
+
+gtfs static api using routes.txt (lookup shortname by route id)
+
 show (redirect to page?) with event details when clicked on a segment
 when clicked on segment, show more detailed downtime segments
 make tooltips work on mobile
@@ -6,6 +9,7 @@ filter by event severity
 ui for filtering by line/event and timeframe
 dashboard-style stats on landing page (global percentage of downtime etc)
 thin progress bar at the top
+make tooltip into a component
 
 STOP_MOVED showing yellow segments (probably not that sever)
 light/dark mode switching

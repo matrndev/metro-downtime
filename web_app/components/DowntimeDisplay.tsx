@@ -41,7 +41,7 @@ export default async function DowntimeDisplay({ route, chunkSizeHours, chunkCoun
                             className="
                                 absolute right-0 top-full mt-2 w-max pointer-events-none
                                 rounded-sm bg-stone-900 px-3 py-2 text-sm text-white border-stone-500 border
-                                opacity-0 transition-opacity text-center z-50 text-right
+                                opacity-0 transition-opacity z-50 text-right
                                 group-hover:opacity-100 group-focus-within:opacity-100
                             "
                         >
