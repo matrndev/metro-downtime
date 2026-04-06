@@ -1,25 +1,10 @@
 "use client";
 
-interface Alert {
-  id: string;
-  cause: string;
-  effect: string;
-  descriptionText: {
-    translation: {
-      text: string;
-    }[];
-  };
-  url: {
-    translation: {
-      text: string;
-    }[];
-  };
-}
-
 import gtfsToHumanReadable from "@/utils/gtfsToHumanReadable";
 import evalSeverity from "@/utils/evalSeverity";
+import { Alert } from "@/types/apiResponses";
 
-export default function DowntimeSegment({ alerts, tsStart, tsEnd }: { alerts: Array<Alert>, tsStart: number, tsEnd: number }) {
+export default function DowntimeSegment({ alerts, tsStart, tsEnd, route }: { alerts: Array<Alert>, tsStart: number, tsEnd: number, route: string }) {
   const tsStartDate = new Date(Number(tsStart) * 1000);
   const tsEndDate = new Date(Number(tsEnd) * 1000);
   const tsStartFormatted = tsStartDate.toLocaleDateString("en-GB", { hour: '2-digit', minute: '2-digit' });
@@ -28,7 +13,8 @@ export default function DowntimeSegment({ alerts, tsStart, tsEnd }: { alerts: Ar
   return (
     <>
       <div className="relative group flex-1">
-        <span
+        <a
+          href={`/route/${route}?start=${tsStart}&end=${tsEnd}`}
           className={
             "rounded block h-8 text-sm " + chooseSegmentColor(alerts)
           }
@@ -38,7 +24,7 @@ export default function DowntimeSegment({ alerts, tsStart, tsEnd }: { alerts: Ar
           className="
             absolute left-1/2 top-full mt-2 w-max max-w-xs pointer-events-none
             -translate-x-1/2 rounded-sm bg-stone-900 px-3 py-2 text-sm text-white border-stone-500 border
-            opacity-0 transition-opacity text-center z-50
+            opacity-0 transition-opacity text-center z-50 
             group-hover:opacity-100 group-focus-within:opacity-100
           "
         >

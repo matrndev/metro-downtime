@@ -24,6 +24,7 @@ export default async function DowntimeDisplay({ route, chunkSizeHours, chunkCoun
                 {chunks.map((chunk: Chunk, i: number) => (
                     <DowntimeSegment
                         key={i}
+                        route={route}
                         alerts={chunk.alertIds.map((id: string) => alerts[id])}
                         tsStart={chunk.start}
                         tsEnd={chunk.end}
