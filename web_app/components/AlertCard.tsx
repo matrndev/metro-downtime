@@ -15,10 +15,16 @@ export default function AlertCard({ alert }: { alert: Alert }) {
     routeIdsSliced = true;
   }
 
+  const startFormatted = new Date(alert.activePeriod[0].start * 1000).toLocaleDateString("en-GB", { hour: "2-digit", minute: "2-digit" });
+  const endFormatted = alert.activePeriod[0]?.end ? new Date(alert.activePeriod[0].end * 1000).toLocaleDateString("en-GB", { hour: "2-digit", minute: "2-digit" }) : undefined;
+  const now = new Date().getTime();
+  let ended = false;
+  if (alert.activePeriod[0].end && alert.activePeriod[0].end * 1000 < now) ended = true;
+
   return (
-    <div className={`border rounded m-3 py-2 px-3 ${chooseBorderColor(alert)}`}>
+    <div className={`border rounded m-3 py-2 px-3 ${chooseBorderColor(alert)} ${ended ? "opacity-50" : ""}`}>
       <div id="header" className="flex items-center justify-between gap-2">
-        <p className="md:text-xl text-lg font-bold">{alert.headerText.translation[0].text}</p>
+        <h1 className="md:text-xl text-lg font-bold">{alert.headerText.translation[0].text}</h1>
         <div className="text-lg text-gray-200">
           {
             routeIds.map((entity) =>
@@ -50,6 +56,8 @@ export default function AlertCard({ alert }: { alert: Alert }) {
           </span>
         </div>
       </div>
+      <h2 className="md:text-md text-sm font-thin">{startFormatted} — {endFormatted || <span className="text-red-500 underline decoration-2">ongoing</span>}</h2>
+      <hr className="my-2 border-stone-500" />
       <div id="description" className="max-h-20 overflow-scroll text-ellipsis">
         {
           alert.descriptionText.translation[0].text ?

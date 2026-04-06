@@ -8,7 +8,7 @@ export interface Alert {
   }[];
   activePeriod: {
     start: number;
-    end: number;
+    end?: number;
   }[];
   headerText: {
     translation: {

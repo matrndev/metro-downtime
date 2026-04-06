@@ -26,8 +26,8 @@ export default async function Home() {
       {alertRoutes.map(({ alertId, routeId }) => (
         <DowntimeDisplay
           key={`${alertId}-${routeId}`}
-          chunkCount={24}
-          chunkSizeHours={1}
+          chunkCount={48}
+          chunkSizeHours={0.5}
           route={routeId}
         />
       ))}

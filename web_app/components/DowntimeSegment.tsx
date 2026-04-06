@@ -9,6 +9,7 @@ export default function DowntimeSegment({ alerts, tsStart, tsEnd, route }: { ale
   const tsEndDate = new Date(Number(tsEnd) * 1000);
   const tsStartFormatted = tsStartDate.toLocaleDateString("en-GB", { hour: '2-digit', minute: '2-digit' });
   const tsEndFormatted = tsEndDate.toLocaleDateString("en-GB", { hour: '2-digit', minute: '2-digit' });
+  const language = "cs";
 
   return (
     <>
@@ -33,9 +34,9 @@ export default function DowntimeSegment({ alerts, tsStart, tsEnd, route }: { ale
             {alerts.map(alert => (
               <span key={alert.id}>
                 <hr className="my-1 border-stone-400" />
-                <b>{gtfsToHumanReadable(alert.effect, "en")}</b>
+                <b>{gtfsToHumanReadable(alert.effect, language)}</b>
                 <br />
-                <p className="text-xs">{gtfsToHumanReadable(alert.cause, "en")}</p>
+                <p className="text-xs">{gtfsToHumanReadable(alert.cause, language)}</p>
               </span>
           ))}
         </div>

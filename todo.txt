@@ -11,6 +11,7 @@ dashboard-style stats on landing page (global percentage of downtime etc)
 thin progress bar at the top
 make tooltip into a component
 
+handle pre-scheduled downtime (this type is not in the gtfs feed, rather in rss feed)
 STOP_MOVED showing yellow segments (probably not that sever)
 light/dark mode switching
 language switching

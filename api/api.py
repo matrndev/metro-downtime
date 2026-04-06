@@ -53,7 +53,7 @@ async def get_downtime(route_id: str, last_days: float, filter_effects: str = No
 
 # todo: we should outsource picked effects checking to a different function since it's used in multiple places
 @app.get("/alerts/route/{route_id}/downtime/chunks")
-async def get_downtime_chunks(route_id: str, chunk_size_hours: int, chunk_count: int, filter_effects: str = None):
+async def get_downtime_chunks(route_id: str, chunk_size_hours: float, chunk_count: int, filter_effects: str = None):
     #!return FileResponse("chunks_example.json")
     picked_effects = filter_effects.split(",") if filter_effects else []
     important_only = False
