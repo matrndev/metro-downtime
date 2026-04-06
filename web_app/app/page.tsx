@@ -1,3 +1,4 @@
+import AlertCard from "@/components/AlertCard";
 import DowntimeDisplay from "@/components/DowntimeDisplay";
 
 async function getActiveAlerts() {
@@ -33,7 +34,8 @@ export default async function Home() {
       <br /><br /><br />
       <p className="pl-2">Last updated:</p>
       {activeAlerts.map((alert: any) => (
-        <p key={alert.id} className="font-bold pl-2">{new Date(alert.lastUpdated * 1000).toLocaleString("en-GB")} -- <small className="text-xs text-clip font-normal">{alert.descriptionText.translation[0].text} <i className="text-red-700">(for {alert.informedEntity.map((entity: any) => entity.routeId).join(", ")})</i> <a className="underline text-blue-400 italic" href={alert.url.translation[0].text}>link to alert</a></small></p>
+        // <p key={alert.id} className="font-bold pl-2">{new Date(alert.lastUpdated * 1000).toLocaleString("en-GB")} -- <small className="text-xs text-clip font-normal">{alert.descriptionText.translation[0].text} <i className="text-red-700">(for {alert.informedEntity.map((entity: any) => entity.routeId).join(", ")})</i> <a className="underline text-blue-400 italic" href={alert.url.translation[0].text}>link to alert</a></small></p>
+        <AlertCard key={alert.id} alert={alert} />
       ))}
     </div>
   );

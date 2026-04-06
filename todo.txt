@@ -1,4 +1,4 @@
-on /, show all lines with active alerts and **past alerts on that day**
+done: on /, show all lines with active alerts and **past alerts on that day**
 show (redirect to page?) with event details when clicked on a segment
 make tooltips work on mobile
 filter by event severity
