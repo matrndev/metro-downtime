@@ -20,7 +20,7 @@ export default async function Home() {
   );
 
   return (
-    <div className="container max-w-4xl mx-auto justify-center mt-10">
+    <div className="container max-w-4xl mx-auto justify-center mt-10 px-1">
       <h1 className="text-2xl font-bold pl-2">Alerts in the last 24 hours:</h1>
       <br />
       {alertRoutes.map(({ alertId, routeId }) => (
