@@ -1,8 +1,6 @@
 import { Alert } from "@/types/apiResponses"
 import evalSeverity from "@/utils/evalSeverity"
-
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBus } from '@fortawesome/free-solid-svg-icons'
+import RouteShortName from "./RouteShortName"
 
 export default function AlertCard({ alert }: { alert: Alert }) {
   const maxRouteIdsToShow = 3;
@@ -29,8 +27,7 @@ export default function AlertCard({ alert }: { alert: Alert }) {
           {
             routeIds.map((entity) =>
               <span className="mr-2 inline-flex whitespace-nowrap items-center" key={entity.routeId}>
-                <FontAwesomeIcon key={entity.routeId} icon={faBus} className="mr-1" />
-                <span>{entity.routeId}</span>
+                <RouteShortName routeId={entity.routeId} />
               </span>
             )
           }
@@ -47,8 +44,7 @@ export default function AlertCard({ alert }: { alert: Alert }) {
               {
                 allRouteIds.slice(maxRouteIdsToShow, allRouteIds.length).map((entity) =>
                   <span className="mr-2 inline-flex whitespace-nowrap items-center" key={entity.routeId}>
-                    <FontAwesomeIcon key={entity.routeId} icon={faBus} className="mr-1" />
-                    <span>{entity.routeId}</span>
+                    <RouteShortName routeId={entity.routeId} />
                   </span>
                 )
               }

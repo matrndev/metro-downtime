@@ -3,6 +3,7 @@ from fastapi.responses import FileResponse
 import database
 import downtime
 import json
+import gtfs_static
 
 app = FastAPI()
 
@@ -21,7 +22,7 @@ async def root():
     return json.loads(json.dumps(data, default=str))
 
 @app.get("/alerts/route/{route_id}")
-async def get_alerts_for_route(route_id: str, last_days: int, filter_effects: str = None):
+async def get_alerts_for_route(route_id: str, last_days: float, filter_effects: str = None):
     """
     gets alerts for a specific route from database
     """
@@ -72,3 +73,8 @@ async def get_downtime_chunks(route_id: str, chunk_size_hours: float, chunk_coun
         "chunks": json.loads(json.dumps(data[0], default=str)),
         "alerts": json.loads(json.dumps(data[1], default=str))
     }
+
+@app.get("/info/route/{route_id}")
+async def get_route_by_id(route_id: str):
+    data = gtfs_static.get_route_by_id(route_id)
+    return data if data else {"detail": "No relevant results found"}

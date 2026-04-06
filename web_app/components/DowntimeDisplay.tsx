@@ -5,6 +5,7 @@ interface Chunk {
 }
 
 import DowntimeSegment from "./DowntimeSegment"
+import RouteShortName from "./RouteShortName";
 
 
 export default async function DowntimeDisplay({ route, chunkSizeHours, chunkCount }: { route: string, chunkSizeHours: number, chunkCount: number }) {
@@ -18,7 +19,7 @@ export default async function DowntimeDisplay({ route, chunkSizeHours, chunkCoun
 
     return (
         <div className="m-2 rounded-md border border-stone-700 p-4">
-            <p className="font-bold text-xl">{route}</p>
+            <p className="font-bold text-xl mb-2"><RouteShortName routeId={route} /></p>
             <p className="text-sm text-gray-600 font-medium text-right"></p>
             <div className="flex items-stretch gap-0.5">
                 {chunks.map((chunk: Chunk, i: number) => (
