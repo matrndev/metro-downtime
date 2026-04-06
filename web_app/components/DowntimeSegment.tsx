@@ -16,7 +16,7 @@ export default function DowntimeSegment({ alerts, tsStart, tsEnd, route }: { ale
         <a
           href={`/route/${route}?start=${tsStart}&end=${tsEnd}`}
           className={
-            "rounded block h-8 text-sm " + chooseSegmentColor(alerts)
+            "hover:border-2 border-blue-400 rounded block h-8 text-sm " + chooseSegmentColor(alerts)
           }
         />
 
@@ -32,7 +32,7 @@ export default function DowntimeSegment({ alerts, tsStart, tsEnd, route }: { ale
           <br />
             {alerts.map(alert => (
               <span key={alert.id}>
-                <hr className="my-1" style={{ color: "#808080" }} />
+                <hr className="my-1 border-stone-400" />
                 <b>{gtfsToHumanReadable(alert.effect, "en")}</b>
                 <br />
                 <p className="text-xs">{gtfsToHumanReadable(alert.cause, "en")}</p>
