@@ -51,8 +51,8 @@ function chooseSegmentColor(alerts: Array<Alert>) {
   for (const alert of alerts) {
     const severity = evalSeverity(alert.effect);
 
-    if (severity === 3) return "bg-red-600";
-    if (severity !== 0) return chosenColor = "bg-yellow-600";
+    if (severity !== 0) chosenColor = "bg-yellow-600";
+    if (severity === 3) return chosenColor = "bg-red-600";
   }
   return chosenColor;
 }
