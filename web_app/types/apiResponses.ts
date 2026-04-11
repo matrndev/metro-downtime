@@ -3,6 +3,7 @@ export interface Alert {
   cause: string;
   effect: string;
   lastUpdated: number;
+  wasOrphaned: boolean;
   informedEntity: {
     routeId: string;
   }[];

@@ -52,7 +52,7 @@ export default function AlertCard({ alert }: { alert: Alert }) {
           </span>
         </div>
       </div>
-      <h2 className="md:text-md text-sm font-thin">{startFormatted} — {endFormatted || <span className="text-red-500 underline decoration-2">ongoing</span>}</h2>
+      <h2 className="md:text-md text-sm font-thin">{startFormatted} — {endFormatted || <span className="text-red-500 underline decoration-2">ongoing</span>} {alert.wasOrphaned && <span className="text-yellow-500 underline decoration-2"> (orphaned)</span>}</h2>
       <hr className="my-2 border-stone-500" />
       <div id="description" className="max-h-20 overflow-scroll text-ellipsis">
         {

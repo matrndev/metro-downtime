@@ -2,6 +2,7 @@ import pymongo
 from pymongo import MongoClient
 import os
 import json
+import alerts
 import datetime
 from dotenv import load_dotenv
 from google.protobuf.json_format import MessageToDict
@@ -26,6 +27,31 @@ def upsert_alert(entity):
     new_alert.update({"lastUpdated": datetime.datetime.now().timestamp()})
 
     collection.update_one({"id": new_alert["id"]}, {"$set": new_alert}, upsert=True)
+
+def end_orphaned():
+    ongoing_alerts = collection.find({
+    "$or": [
+        {"activePeriod.0.end": {"$exists": False}},  # no end field
+        {"activePeriod.0.end": 0},                   # open-ended
+    ]
+    })
+    ongoing_alert_ids = [alert["id"] for alert in ongoing_alerts]
+
+    current_alerts = alerts.get_current()
+    current_alert_ids = [alert.id for alert in current_alerts]
+
+    for alert_id in ongoing_alert_ids:
+        if not alert_id in current_alert_ids:
+            collection.update_one(
+                {"id": alert_id},
+                {
+                    "$set": {
+                        "activePeriod.0.end": datetime.datetime.now().timestamp(),
+                        "lastUpdated": datetime.datetime.now().timestamp(),
+                        "wasOrphaned": True # for debugging
+                    }
+                },
+            )
 
 def get_alerts_for_route(route_id, last_days = 1, important_only = False, filter_effects = None):
     """
