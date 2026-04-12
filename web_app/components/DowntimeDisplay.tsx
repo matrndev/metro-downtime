@@ -48,7 +48,7 @@ export default async function DowntimeDisplay({ route, chunkSizeHours, chunkCoun
                         >
                             This service has been unavailable for ~{Math.round(downtime.downtime_hours)} out of {chunkSizeHours * chunkCount} hours.
                             <br />
-                            {downtime.incident_count} incident{downtime.incident_count !== 1 ? "s" : ""} active in the last {lastDays} day{lastDays !== 1 ? "s" : ""}.
+                            {downtime.incident_count} incident{downtime.incident_count !== 1 ? "s" : ""} recorded in the last {lastDays} day{lastDays !== 1 ? "s" : ""}.
                         </div>
 
                     )}

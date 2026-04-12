@@ -53,13 +53,13 @@ def end_orphaned():
                 },
             )
 
-def get_alerts_for_route(route_id, last_days = 1, important_only = False, filter_effects = None):
+def get_alerts_for_route(route_id, last_days = 1, important_only = False, filter_effects = None, timeframe_start = None, timeframe_end = None):
     """
     retrieves active alerts for the specified route
     *note: last_days set to 1 (default) returns alerts that started today at 00:00 onwards*
     """
-    current_ts = datetime.datetime.now().timestamp()
-    window_start_ts = current_ts - (last_days * 86400)
+    current_ts = datetime.datetime.now().timestamp() if not timeframe_end else timeframe_end
+    window_start_ts = current_ts - (last_days * 86400) if not timeframe_start else timeframe_start
     
     if important_only:
         filter_effects = IMPORTANT_EFFECTS

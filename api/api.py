@@ -22,7 +22,7 @@ async def root():
     return json.loads(json.dumps(data, default=str))
 
 @app.get("/alerts/route/{route_id}")
-async def get_alerts_for_route(route_id: str, last_days: float, filter_effects: str = None):
+async def get_alerts_for_route(route_id: str, last_days: float = None, filter_effects: str = None, start: float = None, end: float = None):
     """
     gets alerts for a specific route from database
     """
@@ -35,7 +35,7 @@ async def get_alerts_for_route(route_id: str, last_days: float, filter_effects: 
             if effect not in POSSIBLE_EFFECTS:
                 raise HTTPException(status_code=400, detail=f"Invalid effect")
     
-    data = database.get_alerts_for_route(route_id, last_days, important_only, filter_effects=picked_effects)
+    data = database.get_alerts_for_route(route_id, last_days, important_only, filter_effects=picked_effects, timeframe_start=start, timeframe_end=end)
     return json.loads(json.dumps(data, default=str)) if data else {"detail": "No relevant results found"}
 
 @app.get("/alerts/route/{route_id}/downtime")
