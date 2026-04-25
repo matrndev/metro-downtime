@@ -1,7 +1,7 @@
 import getRouteById from "@/utils/getRouteById"
 import { RouteType } from "@/utils/getRouteById"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTrainTram, faSubway, faTrain, faBus, faFerry, faCableCar, faQuestion} from '@fortawesome/free-solid-svg-icons'
+import { faTrainTram, faSubway, faTrain, faBus, faFerry, faCableCar, faQuestion } from '@fortawesome/free-solid-svg-icons'
 
 export default async function RouteShortName({ routeId }: { routeId: string }) {
     const routeInfo = await getRouteById(routeId)

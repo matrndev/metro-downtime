@@ -23,7 +23,7 @@ const translations: Record<SupportedLanguages, Record<string, string>> = {
         HOLIDAY: "Holiday",
         WEATHER: "Weather",
         MAINTENANCE: "Maintenance",
-        CONSTRUCTION: "Construction",
+        CONSTRUCTION: "Construction", //! "Silná individuální automobilová doprava" is apparentely also marked as being construction lmao
         POLICE_ACTIVITY: "Police Activity",
         MEDICAL_EMERGENCY: "Medical Emergency",
     },

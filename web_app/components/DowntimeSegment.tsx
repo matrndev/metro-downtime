@@ -9,7 +9,7 @@ export default function DowntimeSegment({ alerts, tsStart, tsEnd, route }: { ale
   const tsEndDate = new Date(Number(tsEnd) * 1000);
   const tsStartFormatted = tsStartDate.toLocaleDateString("en-GB", { hour: '2-digit', minute: '2-digit' });
   const tsEndFormatted = tsEndDate.toLocaleDateString("en-GB", { hour: '2-digit', minute: '2-digit' });
-  const language = "cs";
+  const language = "en";
 
   return (
     <>
