@@ -1,8 +1,11 @@
 import { Alert } from "@/types/apiResponses"
 import evalSeverity from "@/utils/evalSeverity"
 import RouteShortName from "./RouteShortName"
+import gtfsToHumanReadable from "@/utils/gtfsToHumanReadable"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowUpRightFromSquare, faCircleQuestion } from '@fortawesome/free-solid-svg-icons'
 
-export default function AlertCard({ alert }: { alert: Alert }) {
+export default function AlertCard({ alert, showDetailsLink = true, changeOpacity = true }: { alert: Alert, showDetailsLink?: boolean, changeOpacity?: boolean }) {
   const maxRouteIdsToShow = 3;
   let routeIdsSliced = false;
   const allRouteIds = alert.informedEntity;
@@ -20,7 +23,7 @@ export default function AlertCard({ alert }: { alert: Alert }) {
   if (alert.activePeriod[0].end && alert.activePeriod[0].end * 1000 < now) ended = true;
 
   return (
-    <div className={`border rounded m-3 py-2 px-3 ${chooseBorderColor(alert)} ${ended ? "opacity-50" : ""}`}>
+    <div className={`border rounded m-3 py-2 px-3 ${chooseBorderColor(alert)} ${ended && changeOpacity ? "opacity-50" : ""}`}>
       <div id="header" className="flex items-center justify-between gap-2">
         <h1 className="md:text-xl text-lg font-bold">{alert.headerText.translation[0].text}</h1>
         <div className="text-lg text-gray-200">
@@ -31,7 +34,7 @@ export default function AlertCard({ alert }: { alert: Alert }) {
               </span>
             )
           }
-          <span className="relative group flex-1">
+          <span className="relative group flex-1 text-nowrap">
             {routeIdsSliced && <span className="text-sm text-gray-300 underline decoration-dotted cursor-help">{`+ ${allRouteIds.length - maxRouteIdsToShow} more`}</span>}
             <div
               className="
@@ -58,7 +61,10 @@ export default function AlertCard({ alert }: { alert: Alert }) {
         {
           alert.descriptionText.translation[0].text ?
             (<p className="text-md">{alert.descriptionText.translation[0].text}</p>) :
-            (<p className="text-sm italic text-gray-300">No description available.</p>)
+            (<>
+              <p className="text-md">{gtfsToHumanReadable(alert.effect, "en")}, caused by {gtfsToHumanReadable(alert.cause, "en")}.</p>
+              <p className="text-sm italic text-gray-300">No additional description available. <a href="/info/no-description" className="cursor-help"><FontAwesomeIcon icon={faCircleQuestion} /></a></p>
+            </>)
         }
       </div>
       <hr className="my-2 border-stone-500" />
@@ -66,10 +72,14 @@ export default function AlertCard({ alert }: { alert: Alert }) {
         <span>Last updated:
           {" " + new Date(alert.lastUpdated * 1000).toLocaleDateString("en-GB", { hour: "2-digit", minute: "2-digit" })}
         </span>
-        <span className="mx-1">·</span>
-        <a className="text-blue-500 underline" href={alert.url.translation[0].text} target="_blank">
-          View details
-        </a>
+        {showDetailsLink && (
+          <>
+            <span className="mx-1">·</span>
+            <a className="text-blue-500 underline" href={alert.url.translation[0].text} target="_blank">
+              View details <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
+            </a>
+          </>
+        )}
       </div>
     </div>
   )
