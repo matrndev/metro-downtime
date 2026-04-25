@@ -1,38 +1,35 @@
 import AlertCard from "@/components/AlertCard";
 import DowntimeDisplay from "@/components/DowntimeDisplay";
+import { Alert } from "@/types/apiResponses";
 
-async function getActiveAlerts() {
+async function getActiveAlerts(): Promise<Alert[]> {
   const res = await fetch("http://localhost:8000/alerts/route/*?last_days=0.5");
-  return res.json();
+  return (await res.json()) as Alert[];
 }
 
-// todo: rewrite
-
 export default async function Home() {
-  const activeAlerts = await getActiveAlerts();
+  const activeAlerts: Alert[] = await getActiveAlerts();
+  const routes: string[] = [
+    ...new Set(
+      activeAlerts.flatMap((alert: Alert) =>
+        alert.informedEntity.map((entity) => entity.routeId)
+      )
+    ),
+  ];
 
-  // Flatten: one entry per route across all alerts
-  const alertRoutes = activeAlerts.flatMap((alert: any) =>
-    alert.informedEntity.map((entity: { routeId: string }) => ({
-      alertId: alert.id,
-      routeId: entity.routeId,
-    }))
-  );
 
   return (
     <div className="container max-w-4xl mx-auto justify-center mt-10 px-1">
-      {alertRoutes.map(({ alertId, routeId }) => (
+      
+      <br /><br />
+
+      {routes.map((routeId) => (
         <DowntimeDisplay
-          key={`${alertId}-${routeId}`}
+          key={routeId}
           chunkCount={48}
           chunkSizeHours={0.5}
           route={routeId}
         />
-      ))}
-      <br /><br /><br />
-      <p className="pl-2">Last updated:</p>
-      {activeAlerts.map((alert: any) => (
-        <AlertCard key={alert.id} alert={alert} />
       ))}
     </div>
   );
