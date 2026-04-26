@@ -39,8 +39,7 @@ export default function RouteSearchBox() {
 
 			try {
 				const res = await fetch("/api/all-routes", {
-					signal: controller.signal,
-					cache: "no-store",
+					signal: controller.signal
 				});
 
 				if (!res.ok) {

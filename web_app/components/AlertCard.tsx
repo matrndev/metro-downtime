@@ -1,3 +1,5 @@
+"use client"
+
 import { Alert } from "@/types/apiResponses"
 import evalSeverity from "@/utils/evalSeverity"
 import RouteShortName from "./RouteShortName"
@@ -41,7 +43,7 @@ export default function AlertCard({ alert, showDetailsLink = true, changeOpacity
                 absolute right-0 top-full mt-2 max-w-96 pointer-events-none
                 rounded-sm bg-stone-900 px-3 py-2 text-sm text-white border-stone-500 border
                 opacity-0 transition-opacity z-50
-                group-hover:opacity-100 group-focus-within:opacity-100
+                group-hover:opacity-100 group-focus-within:opacity-100 text-wrap
               "
             >
               {
@@ -77,7 +79,7 @@ export default function AlertCard({ alert, showDetailsLink = true, changeOpacity
           {" " + new Date(alert.lastUpdated * 1000).toLocaleDateString("en-GB", { hour: "2-digit", minute: "2-digit" })}
           {alert.wasOrphaned && " (o)"}
         </span>
-        {showDetailsLink && (
+        {showDetailsLink && !endFormatted && (
           <>
             <span className="mx-1">·</span>
             <a className="text-blue-500 underline" href={alert.url.translation[0].text} target="_blank">

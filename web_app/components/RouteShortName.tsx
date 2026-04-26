@@ -1,15 +1,57 @@
-import getRouteById from "@/utils/getRouteById"
-import { chooseIconByRouteType } from "@/utils/chooseIconByRouteType"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+"use client";
 
+import { useEffect, useState } from "react";
+import getRouteById from "@/utils/getRouteById";
+import { chooseIconByRouteType } from "@/utils/chooseIconByRouteType";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faQuestion } from "@fortawesome/free-solid-svg-icons";
+import { RouteInfo } from "@/types/apiResponses";
 
-export default async function RouteShortName({ routeId }: { routeId: string }) {
-    const routeInfo = await getRouteById(routeId)
-    
+function isRouteInfo(value: unknown): value is RouteInfo {
+    if (!value || typeof value !== "object") {
+        return false;
+    }
+
+    return "route_short_name" in value && "route_type" in value;
+}
+
+export default function RouteShortName({ routeId }: { routeId: string }) {
+    const [routeInfo, setRouteInfo] = useState<RouteInfo | null>(null);
+
+    useEffect(() => {
+        let isMounted = true;
+
+        async function loadRouteInfo() {
+            try {
+                const data = await getRouteById(routeId);
+                if (!isMounted) {
+                    return;
+                }
+
+                setRouteInfo(isRouteInfo(data) ? data : null);
+            } catch {
+                if (!isMounted) {
+                    return;
+                }
+
+                setRouteInfo(null);
+            }
+        }
+
+        loadRouteInfo();
+
+        return () => {
+            isMounted = false;
+        };
+    }, [routeId]);
+
+    const shortName = routeInfo?.route_short_name || routeId;
+    const icon = routeInfo ? chooseIconByRouteType(routeInfo.route_type) : faQuestion;
+
     return (
-        <a href={`https://mapa.pid.cz/?filter=${routeInfo.route_short_name}`} target="_blank">
-            <FontAwesomeIcon icon={chooseIconByRouteType(routeInfo.route_type)} className="mr-1" />
-            <span>{routeInfo.route_short_name}</span>
+        <a href={`/route/${routeId}`} target="_blank">
+            <FontAwesomeIcon icon={icon} className="mr-1" />
+            <span>{shortName}</span>
         </a>
-    )
+    );
 }

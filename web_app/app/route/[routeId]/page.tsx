@@ -24,21 +24,23 @@ export default async function Page({
   const { routeId } = await params
   const { start, end } = await searchParams
   const alerts = await getAlerts(routeId, start, end);
-  console.log(alerts)
 
   return (
-    <div className="container max-w-4xl mx-auto justify-center mt-10">
-      <Link href={"/"} className="text-center text-blue-500 underline">Home</Link>
-      <DowntimeDisplay route={routeId} chunkCount={48} chunkSizeHours={0.5} />
-      <DowntimeDisplay route={routeId} chunkCount={30} chunkSizeHours={24} />
+    <div className="overflow-x-clip">
+      <div className="container max-w-4xl mx-auto justify-center mt-10">
+        <Link href={"/"} className="text-center text-blue-500 underline">Home</Link>
+        <DowntimeDisplay route={routeId} chunkCount={48} chunkSizeHours={0.5} />
+        <DowntimeDisplay route={routeId} chunkCount={30} chunkSizeHours={24} />
 
-      { !alerts || alerts.length === 0 ? (
-        <p className="text-center text-stone-300">No alerts for this route.</p>
-      ) : (
-        alerts.map((alert: Alert) => (
-          <AlertCard key={alert.id} alert={alert} changeOpacity={false} showDetailsLink={false} />
-        ))
-      ) }
+        {!alerts || alerts.length === 0 ? (
+          <p className="text-center text-stone-300">No alerts for this route.</p>
+        ) : (
+          alerts.map((alert: Alert) => (
+            <AlertCard key={alert.id} alert={alert} changeOpacity={false} showDetailsLink={false} />
+          ))
+        )}
+      </div>
     </div>
+
   )
 }
