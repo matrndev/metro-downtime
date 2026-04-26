@@ -25,8 +25,8 @@ export default function AlertCard({ alert, showDetailsLink = true, changeOpacity
   return (
     <div className={`border rounded m-3 py-2 px-3 ${chooseBorderColor(alert)} ${ended && changeOpacity ? "opacity-50" : ""}`}>
       <div id="header" className="flex items-center justify-between gap-2">
-        <h1 className="md:text-xl text-lg font-bold">{alert.headerText.translation[0].text}</h1>
-        <div className="text-lg text-gray-200">
+        <h1 className="md:text-xl text-lg font-bold">{gtfsToHumanReadable(alert.effect, "en")} ({gtfsToHumanReadable(alert.cause, "en")})</h1>
+        <div className="text-lg">
           {
             routeIds.map((entity) =>
               <span className="mr-2 inline-flex whitespace-nowrap items-center" key={entity.routeId}>
@@ -55,22 +55,27 @@ export default function AlertCard({ alert, showDetailsLink = true, changeOpacity
           </span>
         </div>
       </div>
-      <h2 className="md:text-md text-sm font-thin">{startFormatted} — {endFormatted || <span className="text-red-500 underline decoration-2">ongoing</span>} {alert.wasOrphaned && <span className="text-yellow-500 underline decoration-2"> (orphaned)</span>}</h2>
+      <h2 className="md:text-md text-sm font-thin text-stone-200">{startFormatted} — {endFormatted || <span className="text-red-500 underline decoration-2">ongoing</span>}</h2>
       <hr className="my-2 border-stone-500" />
-      <div id="description" className="max-h-20 overflow-scroll text-ellipsis">
+      <div id="description" className="max-h-30 overflow-y-scroll"> {/* todo: the scrollbar looks a bit weird on chrome */ }
         {
           alert.descriptionText.translation[0].text ?
-            (<p className="text-md">{alert.descriptionText.translation[0].text}</p>) :
+            (
+              <>
+                <p className="text-md font-bold">{alert.headerText.translation[0].text}</p>
+                <p className="text-md">{alert.descriptionText.translation[0].text}</p>
+              </>
+            ) :
             (<>
-              <p className="text-md">{gtfsToHumanReadable(alert.effect, "en")}, caused by {gtfsToHumanReadable(alert.cause, "en")}.</p>
               <p className="text-sm italic text-gray-300">No additional description available. <a href="/info/no-description" className="cursor-help"><FontAwesomeIcon icon={faCircleQuestion} /></a></p>
             </>)
         }
       </div>
       <hr className="my-2 border-stone-500" />
-      <div id="footer" className="text-xs text-gray-400">
+      <div id="footer" className="text-xs text-stone-400">
         <span>Last updated:
           {" " + new Date(alert.lastUpdated * 1000).toLocaleDateString("en-GB", { hour: "2-digit", minute: "2-digit" })}
+          {alert.wasOrphaned && " (o)"}
         </span>
         {showDetailsLink && (
           <>
