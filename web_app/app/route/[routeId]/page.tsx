@@ -5,7 +5,11 @@ import AlertCard from "@/components/AlertCard";
 
 async function getAlerts(routeId: string, start: number, end: number) {
   let url = `http://localhost:8000/alerts/route/${routeId}?`
-  if (!start || !end) url += "last_days=30"
+  if (!start || !end) {
+    url += "last_days=30"
+  } else {
+    url += `start=${start}&end=${end}`
+  }
   const res = await fetch(url);
   return res.json();
 }
@@ -20,6 +24,7 @@ export default async function Page({
   const { routeId } = await params
   const { start, end } = await searchParams
   const alerts = await getAlerts(routeId, start, end);
+  console.log(alerts)
 
   return (
     <div className="container max-w-4xl mx-auto justify-center mt-10">
@@ -27,9 +32,13 @@ export default async function Page({
       <DowntimeDisplay route={routeId} chunkCount={48} chunkSizeHours={0.5} />
       <DowntimeDisplay route={routeId} chunkCount={30} chunkSizeHours={24} />
 
-      { alerts.map((alert: Alert) => (
-        <AlertCard key={alert.id} alert={alert} changeOpacity={false} showDetailsLink={false} />
-      )) }
+      { !alerts || alerts.length === 0 ? (
+        <p className="text-center text-stone-300">No alerts for this route.</p>
+      ) : (
+        alerts.map((alert: Alert) => (
+          <AlertCard key={alert.id} alert={alert} changeOpacity={false} showDetailsLink={false} />
+        ))
+      ) }
     </div>
   )
 }
