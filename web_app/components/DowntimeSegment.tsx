@@ -90,7 +90,7 @@ export default function DowntimeSegment({ alerts, tsStart, tsEnd, route }: { ale
                   ))}
                 </div>
               ) : (
-                <p className="px-4 py-6 text-sm text-stone-300">No alerts found for this segment.</p>
+                <p className="px-4 py-6 text-sm text-stone-300">No alerts in this timeframe.</p>
               )}
             </div>
           </div>

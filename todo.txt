@@ -1,11 +1,10 @@
-when i click on a route downtime segment, there will be a popup with alert details
-
+DONE: when i click on a route downtime segment, there will be a popup with alert details
 DONE: on /, show all lines with active alerts and **past alerts on that day**
 DONE: gtfs static api using routes.txt (lookup shortname by route id)
 DONE: show (redirect to page?) with event details when clicked on a segment
 DONE-ish: when clicked on segment, show more detailed downtime segments
+DONE: make tooltips work on mobile
 
-make tooltips work on mobile
 filter by event severity
 ui for filtering by line/event and timeframe
 dashboard-style stats on landing page (global percentage of downtime etc)

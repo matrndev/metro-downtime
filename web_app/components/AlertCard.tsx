@@ -79,7 +79,7 @@ export default function AlertCard({ alert, showDetailsLink = true, changeOpacity
           {" " + new Date(alert.lastUpdated * 1000).toLocaleDateString("en-GB", { hour: "2-digit", minute: "2-digit" })}
           {alert.wasOrphaned && " (o)"}
         </span>
-        {showDetailsLink && !endFormatted && (
+        {showDetailsLink && !ended && (
           <>
             <span className="mx-1">·</span>
             <a className="text-blue-500 underline" href={alert.url.translation[0].text} target="_blank">

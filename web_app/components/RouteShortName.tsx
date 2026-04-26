@@ -49,7 +49,7 @@ export default function RouteShortName({ routeId }: { routeId: string }) {
     const icon = routeInfo ? chooseIconByRouteType(routeInfo.route_type) : faQuestion;
 
     return (
-        <a href={`/route/${routeId}`} target="_blank">
+        <a href={`/route/${routeId}`}>
             <FontAwesomeIcon icon={icon} className="mr-1" />
             <span>{shortName}</span>
         </a>
