@@ -34,17 +34,17 @@ export default async function Home() {
         </div>
         <br /><br />
         <h1 className="text-2xl font-bold mx-2">Affected services in the past 24 hours:</h1>
-        {routes.map((routeId) => (
+        {[...routes].reverse().map((routeId) => (
           <DowntimeDisplay
             key={routeId}
-            chunkCount={48}
-            chunkSizeHours={0.5}
+            chunkCount={24}
+            chunkSizeHours={1}
             route={routeId}
           />
         ))}
         <br /><br />
         <h1 className="text-2xl font-bold mx-2">Currently active alerts:</h1>
-        {activeAlerts.map((alert) => (
+        {[...activeAlerts].reverse().map((alert) => (
           <AlertCard key={alert.id} alert={alert} />
         ))}
       </div>

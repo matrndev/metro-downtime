@@ -32,7 +32,7 @@ export default function DowntimeSegment({ alerts, tsStart, tsEnd, route }: { ale
           type="button"
           onClick={openPopup}
           className={
-            "w-full hover:border-2 border-blue-400 rounded block h-8 text-sm " + chooseSegmentColor(alerts)
+            "w-full hover:border-2 border-blue-400 cursor-pointer rounded block h-8 text-sm " + chooseSegmentColor(alerts)
           }
         />
 
@@ -90,7 +90,7 @@ export default function DowntimeSegment({ alerts, tsStart, tsEnd, route }: { ale
                   ))}
                 </div>
               ) : (
-                <p className="px-4 py-6 text-sm text-stone-300">No alerts in this timeframe.</p>
+                <p className="px-4 py-6 text-stone-300 italic text-center">No alerts in this timeframe.</p>
               )}
             </div>
           </div>

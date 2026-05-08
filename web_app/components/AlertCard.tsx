@@ -69,7 +69,7 @@ export default function AlertCard({ alert, showDetailsLink = true, changeOpacity
               </>
             ) :
             (<>
-              <p className="text-sm italic text-gray-300">No additional description available. <a href="/info/no-description" className="cursor-help"><FontAwesomeIcon icon={faCircleQuestion} /></a></p>
+              <p className="text-sm italic text-gray-300">No additional description available. {/*<a href="/info/no-description" className="cursor-help"><FontAwesomeIcon icon={faCircleQuestion} /></a>*/}</p>
             </>)
         }
       </div>
