@@ -6,6 +6,9 @@ import { config } from '@fortawesome/fontawesome-svg-core'
 import '@fortawesome/fontawesome-svg-core/styles.css'
 config.autoAddCss = false
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart } from "@fortawesome/free-solid-svg-icons";
+
 const nextSans = Schibsted_Grotesk({
   variable: "--font-next-sans",
   subsets: ["latin"],
@@ -31,7 +34,17 @@ export default function RootLayout({
       lang="en"
       className={`${nextSans.variable} ${nextMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-screen flex flex-col">
+        {children}
+        <div className="mt-auto w-full">
+          <p className="pt-1 mt-5 mb-1 text-center text-stone-300 text-xs border-t border-stone-500 bg-stone-500/10">Not affiliated with or endorsed by PID.
+            <br />
+            This app uses data from <a href="https://pid.cz/en/opendata/" target="_blank" className="text-blue-500 underline">PID Opendata</a> (licensed under <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" className="text-blue-500 underline">CC BY 4.0</a>) and the <a href="https://api.golemio.cz/pid/docs/openapi" target="_blank" className="text-blue-500 underline">Golemio API</a>.
+            <br /><br />
+            Made with <FontAwesomeIcon icon={faHeart} className="text-red-500" /> by <a href="https://matrn.dev" target="_blank">Matyáš Trnka</a>.
+          </p>
+        </div>
+      </body>
     </html>
   );
 }
