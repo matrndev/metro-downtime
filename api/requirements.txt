@@ -4,3 +4,4 @@ python-dotenv
 requests
 gtfs-realtime-bindings
 protobuf
+partridge
