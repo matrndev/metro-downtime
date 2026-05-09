@@ -3,14 +3,19 @@ import DowntimeDisplay from "@/components/DowntimeDisplay";
 import RouteSearchBox from "@/components/RouteSearchBox";
 import { Alert } from "@/types/apiResponses";
 
+export const dynamic = "force-dynamic";
 
 async function getAlerts(): Promise<Alert[]> {
-  const res = await fetch("http://localhost:8000/alerts/route/*?last_days=1");
+  const res = await fetch("http://localhost:8000/alerts/route/*?last_days=1", {
+    cache: "no-store",
+  });
   return (await res.json()) as Alert[];
 }
 
 async function getActiveAlerts(): Promise<Alert[]> {
-  const res = await fetch("http://localhost:8000/alerts/all-active");
+  const res = await fetch("http://localhost:8000/alerts/all-active", {
+    cache: "no-store",
+  });
   return (await res.json()) as Alert[];
 }
 

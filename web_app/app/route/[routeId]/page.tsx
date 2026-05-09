@@ -11,7 +11,9 @@ async function getAlerts(routeId: string, start: number, end: number, lastDays: 
   if (start && end) {
     url = `http://localhost:8000/alerts/route/${routeId}?start=${start}&end=${end}`;
   }
-  const res = await fetch(url);
+  const res = await fetch(url, {
+    cache: "no-store",
+  });
   return res.json();
 }
 
