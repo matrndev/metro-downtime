@@ -25,7 +25,7 @@ POSSIBLE_EFFECTS = ["NO_SERVICE", "REDUCED_SERVICE", "SIGNIFICANT_DELAYS", "DETO
 
 @app.get("/")
 async def root():
-    return FileResponse("test.html")
+    return "hi!"
 
 @app.get("/alerts/all-active")
 async def root():
